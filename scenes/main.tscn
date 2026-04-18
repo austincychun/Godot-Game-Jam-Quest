@@ -1,0 +1,482 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/battery_pickup.tscn" id="3_battery"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="4_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/exit_zone.tscn" id="5_exit"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/generator.tscn" id="7_generator"]
+[ext_resource type="AudioStream" path="res://assets/audio/music_loop.wav" id="8_music"]
+[ext_resource type="AudioStream" path="res://assets/audio/activate.wav" id="9_activate"]
+[ext_resource type="AudioStream" path="res://assets/audio/victory.wav" id="10_victory"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_vertical"]
+size = Vector2(40, 1040)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_horizontal"]
+size = Vector2(1880, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_column_tall"]
+size = Vector2(50, 360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_column_mid"]
+size = Vector2(50, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_mid_h"]
+size = Vector2(320, 40)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.02, 0.03, 0.06, 1)
+
+[node name="FloorGlow" type="ColorRect" parent="."]
+offset_left = 60.0
+offset_top = 60.0
+offset_right = 1860.0
+offset_bottom = 1020.0
+color = Color(0.04, 0.08, 0.14, 0.45)
+
+[node name="GridGlowH1" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 180.0
+offset_right = 1840.0
+offset_bottom = 184.0
+color = Color(0.18, 0.55, 0.8, 0.18)
+
+[node name="GridGlowH2" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 420.0
+offset_right = 1840.0
+offset_bottom = 424.0
+color = Color(0.18, 0.55, 0.8, 0.14)
+
+[node name="GridGlowH3" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 660.0
+offset_right = 1840.0
+offset_bottom = 664.0
+color = Color(0.18, 0.55, 0.8, 0.18)
+
+[node name="GridGlowH4" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 900.0
+offset_right = 1840.0
+offset_bottom = 904.0
+color = Color(0.18, 0.55, 0.8, 0.14)
+
+[node name="GridGlowV1" type="ColorRect" parent="."]
+offset_left = 320.0
+offset_top = 80.0
+offset_right = 324.0
+offset_bottom = 1000.0
+color = Color(0.18, 0.55, 0.8, 0.10)
+
+[node name="GridGlowV2" type="ColorRect" parent="."]
+offset_left = 700.0
+offset_top = 80.0
+offset_right = 704.0
+offset_bottom = 1000.0
+color = Color(0.18, 0.55, 0.8, 0.10)
+
+[node name="GridGlowV3" type="ColorRect" parent="."]
+offset_left = 1080.0
+offset_top = 80.0
+offset_right = 1084.0
+offset_bottom = 1000.0
+color = Color(0.18, 0.55, 0.8, 0.10)
+
+[node name="GridGlowV4" type="ColorRect" parent="."]
+offset_left = 1460.0
+offset_top = 80.0
+offset_right = 1464.0
+offset_bottom = 1000.0
+color = Color(0.18, 0.55, 0.8, 0.10)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(20, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(1900, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(960, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(960, 1060)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="Column1Upper" type="StaticBody2D" parent="Walls"]
+position = Vector2(560, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Column1Upper"]
+shape = SubResource("RectangleShape2D_column_tall")
+
+[node name="Column1Lower" type="StaticBody2D" parent="Walls"]
+position = Vector2(560, 880)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Column1Lower"]
+shape = SubResource("RectangleShape2D_column_tall")
+
+[node name="Column2Upper" type="StaticBody2D" parent="Walls"]
+position = Vector2(980, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Column2Upper"]
+shape = SubResource("RectangleShape2D_column_mid")
+
+[node name="Column2Lower" type="StaticBody2D" parent="Walls"]
+position = Vector2(980, 830)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Column2Lower"]
+shape = SubResource("RectangleShape2D_column_mid")
+
+[node name="Column3Upper" type="StaticBody2D" parent="Walls"]
+position = Vector2(1380, 220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Column3Upper"]
+shape = SubResource("RectangleShape2D_column_tall")
+
+[node name="Column3Lower" type="StaticBody2D" parent="Walls"]
+position = Vector2(1380, 860)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Column3Lower"]
+shape = SubResource("RectangleShape2D_column_mid")
+
+[node name="MidWallLeft" type="StaticBody2D" parent="Walls"]
+position = Vector2(330, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/MidWallLeft"]
+shape = SubResource("RectangleShape2D_wall_mid_h")
+
+[node name="MidWallRight" type="StaticBody2D" parent="Walls"]
+position = Vector2(1620, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/MidWallRight"]
+shape = SubResource("RectangleShape2D_wall_mid_h")
+
+[node name="UpperLaneWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(1180, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/UpperLaneWall"]
+shape = SubResource("RectangleShape2D_wall_mid_h")
+
+[node name="ReactorSouthWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(1180, 900)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/ReactorSouthWall"]
+shape = SubResource("RectangleShape2D_wall_mid_h")
+
+[node name="Column1UpperVisual" type="ColorRect" parent="."]
+offset_left = 535.0
+offset_top = 20.0
+offset_right = 585.0
+offset_bottom = 380.0
+color = Color(0.16, 0.2, 0.28, 1)
+
+[node name="Column1LowerVisual" type="ColorRect" parent="."]
+offset_left = 535.0
+offset_top = 700.0
+offset_right = 585.0
+offset_bottom = 1060.0
+color = Color(0.16, 0.2, 0.28, 1)
+
+[node name="Column2UpperVisual" type="ColorRect" parent="."]
+offset_left = 955.0
+offset_top = 130.0
+offset_right = 1005.0
+offset_bottom = 370.0
+color = Color(0.16, 0.2, 0.28, 1)
+
+[node name="Column2LowerVisual" type="ColorRect" parent="."]
+offset_left = 955.0
+offset_top = 710.0
+offset_right = 1005.0
+offset_bottom = 950.0
+color = Color(0.16, 0.2, 0.28, 1)
+
+[node name="Column3UpperVisual" type="ColorRect" parent="."]
+offset_left = 1355.0
+offset_top = 40.0
+offset_right = 1405.0
+offset_bottom = 400.0
+color = Color(0.16, 0.2, 0.28, 1)
+
+[node name="Column3LowerVisual" type="ColorRect" parent="."]
+offset_left = 1355.0
+offset_top = 740.0
+offset_right = 1405.0
+offset_bottom = 980.0
+color = Color(0.16, 0.2, 0.28, 1)
+
+[node name="MidWallLeftVisual" type="ColorRect" parent="."]
+offset_left = 170.0
+offset_top = 520.0
+offset_right = 490.0
+offset_bottom = 560.0
+color = Color(0.17, 0.22, 0.29, 1)
+
+[node name="MidWallRightVisual" type="ColorRect" parent="."]
+offset_left = 1460.0
+offset_top = 520.0
+offset_right = 1780.0
+offset_bottom = 560.0
+color = Color(0.17, 0.22, 0.29, 1)
+
+[node name="UpperLaneWallVisual" type="ColorRect" parent="."]
+offset_left = 1020.0
+offset_top = 100.0
+offset_right = 1340.0
+offset_bottom = 140.0
+color = Color(0.17, 0.22, 0.29, 1)
+
+[node name="ReactorSouthWallVisual" type="ColorRect" parent="."]
+offset_left = 1020.0
+offset_top = 880.0
+offset_right = 1340.0
+offset_bottom = 920.0
+color = Color(0.17, 0.22, 0.29, 1)
+
+[node name="ReactorVisual" type="ColorRect" parent="."]
+offset_left = 1100.0
+offset_top = 380.0
+offset_right = 1580.0
+offset_bottom = 700.0
+color = Color(0.12, 0.16, 0.22, 1)
+
+[node name="GeneratorLight" type="ColorRect" parent="."]
+offset_left = 1244.0
+offset_top = 404.0
+offset_right = 1436.0
+offset_bottom = 596.0
+color = Color(0.95, 0.8, 0.25, 0.35)
+
+[node name="StartZoneVisual" type="ColorRect" parent="."]
+offset_left = 100.0
+offset_top = 860.0
+offset_right = 220.0
+offset_bottom = 1000.0
+color = Color(0.2, 0.48, 0.95, 0.35)
+
+[node name="StartLabel" type="Label" parent="."]
+offset_left = 86.0
+offset_top = 1000.0
+offset_right = 236.0
+offset_bottom = 1034.0
+text = "START"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+
+[node name="ExitVisual" type="ColorRect" parent="."]
+offset_left = 110.0
+offset_top = 90.0
+offset_right = 230.0
+offset_bottom = 230.0
+color = Color(0.65, 0.2, 0.2, 1)
+
+[node name="ExitLabel" type="Label" parent="."]
+offset_left = 78.0
+offset_top = 50.0
+offset_right = 264.0
+offset_bottom = 84.0
+text = "EXIT LOCKED"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="GeneratorStatusLabel" type="Label" parent="."]
+offset_left = 1175.0
+offset_top = 320.0
+offset_right = 1510.0
+offset_bottom = 360.0
+text = "GENERATOR"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 22
+
+[node name="PathHintTop" type="ColorRect" parent="."]
+offset_left = 240.0
+offset_top = 120.0
+offset_right = 980.0
+offset_bottom = 146.0
+color = Color(0.18, 0.62, 0.95, 0.24)
+
+[node name="PathHintMid" type="ColorRect" parent="."]
+offset_left = 620.0
+offset_top = 540.0
+offset_right = 1460.0
+offset_bottom = 566.0
+color = Color(0.92, 0.4, 0.1, 0.12)
+
+[node name="PathHintBottom" type="ColorRect" parent="."]
+offset_left = 240.0
+offset_top = 930.0
+offset_right = 1340.0
+offset_bottom = 956.0
+color = Color(0.18, 0.62, 0.95, 0.18)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(160, 930)
+
+[node name="Battery1" parent="." instance=ExtResource("3_battery")]
+position = Vector2(270, 850)
+
+[node name="Battery2" parent="." instance=ExtResource("3_battery")]
+position = Vector2(350, 130)
+
+[node name="Battery3" parent="." instance=ExtResource("3_battery")]
+position = Vector2(760, 125)
+
+[node name="Battery4" parent="." instance=ExtResource("3_battery")]
+position = Vector2(1180, 250)
+
+[node name="Battery5" parent="." instance=ExtResource("3_battery")]
+position = Vector2(1690, 660)
+
+[node name="Battery6" parent="." instance=ExtResource("3_battery")]
+position = Vector2(1280, 950)
+
+[node name="Battery7" parent="." instance=ExtResource("3_battery")]
+position = Vector2(760, 950)
+
+[node name="Enemy1" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(300, 740)
+move_distance = 180.0
+move_time = 1.2
+chase_radius = 260.0
+
+[node name="Enemy2" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(820, 520)
+move_distance = 220.0
+move_time = 1.0
+chase_radius = 300.0
+
+[node name="Enemy3" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(900, 180)
+move_distance = 160.0
+move_time = 1.1
+patrol_axis = Vector2(0, 1)
+chase_radius = 280.0
+
+[node name="Enemy4" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(1500, 810)
+move_distance = 180.0
+move_time = 0.95
+patrol_axis = Vector2(0, 1)
+chase_radius = 300.0
+chase_speed = 165.0
+
+[node name="Enemy5" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(1620, 270)
+move_distance = 170.0
+move_time = 0.9
+chase_radius = 260.0
+chase_speed = 170.0
+
+[node name="Generator" parent="." instance=ExtResource("7_generator")]
+position = Vector2(1340, 540)
+
+[node name="ExitZone" parent="." instance=ExtResource("5_exit")]
+position = Vector2(170, 160)
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_music")
+autoplay = true
+volume_db = -14.0
+
+[node name="ActivateAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_activate")
+volume_db = -6.0
+
+[node name="VictoryAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_victory")
+volume_db = -4.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("6_hud")]
+
+[node name="ObjectiveLabel" type="Label" parent="CanvasLayer"]
+offset_left = 790.0
+offset_top = 22.0
+offset_right = 1248.0
+offset_bottom = 66.0
+text = "OBJECTIVE: Reach the generator"
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 22
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 355.0
+offset_top = 250.0
+offset_right = 925.0
+offset_bottom = 430.0
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 38
+
+[node name="EndScreen" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="CanvasLayer/EndScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.06, 0.82)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/EndScreen"]
+offset_left = 280.0
+offset_top = 190.0
+offset_right = 1000.0
+offset_bottom = 530.0
+
+[node name="EndTitle" type="Label" parent="CanvasLayer/EndScreen/Panel"]
+offset_left = 70.0
+offset_top = 68.0
+offset_right = 650.0
+offset_bottom = 146.0
+text = "POWER RESTORED"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 44
+
+[node name="EndSubtitle" type="Label" parent="CanvasLayer/EndScreen/Panel"]
+offset_left = 70.0
+offset_top = 170.0
+offset_right = 650.0
+offset_bottom = 250.0
+text = "Facility back online. Press R to run again."
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="EndHint" type="Label" parent="CanvasLayer/EndScreen/Panel"]
+offset_left = 70.0
+offset_top = 264.0
+offset_right = 650.0
+offset_bottom = 314.0
+text = "Enemies freeze once the run ends"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18

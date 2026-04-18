@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_script"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 430.0
+offset_bottom = 110.0
+modulate = Color(0.75, 0.9, 1, 0.95)
+
+[node name="BatteryLabel" type="Label" parent="."]
+offset_left = 34.0
+offset_top = 28.0
+offset_right = 200.0
+offset_bottom = 55.0
+text = "Battery: 100%"
+theme_override_font_sizes/font_size = 22
+
+[node name="BatteryBar" type="ProgressBar" parent="."]
+offset_left = 34.0
+offset_top = 58.0
+offset_right = 405.0
+offset_bottom = 88.0
+value = 100.0
+show_percentage = false
+modulate = Color(0.4, 1, 0.66, 1)
+
+[node name="InfoLabel" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 665.0
+offset_right = 960.0
+offset_bottom = 705.0
+text = ""
+theme_override_font_sizes/font_size = 20

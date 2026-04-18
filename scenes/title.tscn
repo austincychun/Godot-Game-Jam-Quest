@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/title.gd" id="1_script"]
+[ext_resource type="AudioStream" path="res://assets/audio/music_loop.wav" id="2_music"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.08, 1)
+
+[node name="Glow1" type="ColorRect" parent="."]
+offset_left = 120.0
+offset_top = 110.0
+offset_right = 1160.0
+offset_bottom = 116.0
+color = Color(0.2, 0.65, 1, 0.18)
+
+[node name="Glow2" type="ColorRect" parent="."]
+offset_left = 120.0
+offset_top = 585.0
+offset_right = 1160.0
+offset_bottom = 591.0
+color = Color(0.2, 0.65, 1, 0.18)
+
+[node name="Glow3" type="ColorRect" parent="."]
+offset_left = 220.0
+offset_top = 110.0
+offset_right = 226.0
+offset_bottom = 610.0
+color = Color(0.2, 0.65, 1, 0.12)
+
+[node name="Glow4" type="ColorRect" parent="."]
+offset_left = 1060.0
+offset_top = 110.0
+offset_right = 1066.0
+offset_bottom = 610.0
+color = Color(0.2, 0.65, 1, 0.12)
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 252.0
+offset_top = 156.0
+offset_right = 1028.0
+offset_bottom = 574.0
+
+[node name="Title" type="Label" parent="."]
+offset_left = 356.0
+offset_top = 214.0
+offset_right = 924.0
+offset_bottom = 296.0
+text = "POWER DRAIN"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 54
+
+[node name="Subtitle" type="Label" parent="."]
+offset_left = 330.0
+offset_top = 308.0
+offset_right = 950.0
+offset_bottom = 370.0
+text = "Restore the generator before your battery dies."
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 26
+
+[node name="Controls" type="Label" parent="."]
+offset_left = 340.0
+offset_top = 384.0
+offset_right = 940.0
+offset_bottom = 468.0
+text = "WASD or Arrow Keys to move\nSpace to dash\nActivate the generator, then return to the exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 22
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 517.0
+offset_top = 480.0
+offset_right = 763.0
+offset_bottom = 546.0
+text = "Start Run"
+theme_override_font_sizes/font_size = 24
+
+[node name="Hint" type="Label" parent="."]
+offset_left = 420.0
+offset_top = 625.0
+offset_right = 860.0
+offset_bottom = 664.0
+text = "Press Enter or Space to begin"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_music")
+autoplay = true
+volume_db = -12.0
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

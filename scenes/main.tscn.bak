@@ -1,0 +1,241 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/battery_pickup.tscn" id="3_battery"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="4_enemy"]
+[ext_resource type="PackedScene" path="res://scenes/exit_zone.tscn" id="5_exit"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://scenes/generator.tscn" id="7_generator"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_vertical"]
+size = Vector2(40, 680)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_horizontal"]
+size = Vector2(1180, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_column"]
+size = Vector2(40, 280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_reactor"]
+size = Vector2(220, 220)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.05, 0.06, 0.1, 1)
+
+[node name="GridGlowH1" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 140.0
+offset_right = 1200.0
+offset_bottom = 144.0
+color = Color(0.15, 0.24, 0.3, 0.35)
+
+[node name="GridGlowH2" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 360.0
+offset_right = 1200.0
+offset_bottom = 364.0
+color = Color(0.15, 0.24, 0.3, 0.35)
+
+[node name="GridGlowH3" type="ColorRect" parent="."]
+offset_left = 80.0
+offset_top = 580.0
+offset_right = 1200.0
+offset_bottom = 584.0
+color = Color(0.15, 0.24, 0.3, 0.35)
+
+[node name="GridGlowV1" type="ColorRect" parent="."]
+offset_left = 220.0
+offset_top = 80.0
+offset_right = 224.0
+offset_bottom = 640.0
+color = Color(0.15, 0.24, 0.3, 0.35)
+
+[node name="GridGlowV2" type="ColorRect" parent="."]
+offset_left = 540.0
+offset_top = 80.0
+offset_right = 544.0
+offset_bottom = 640.0
+color = Color(0.15, 0.24, 0.3, 0.35)
+
+[node name="GridGlowV3" type="ColorRect" parent="."]
+offset_left = 860.0
+offset_top = 80.0
+offset_right = 864.0
+offset_bottom = 640.0
+color = Color(0.15, 0.24, 0.3, 0.35)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(30, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(1250, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_wall_vertical")
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(640, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(640, 690)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("RectangleShape2D_wall_horizontal")
+
+[node name="UpperColumn" type="StaticBody2D" parent="Walls"]
+position = Vector2(540, 170)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/UpperColumn"]
+shape = SubResource("RectangleShape2D_column")
+
+[node name="LowerColumn" type="StaticBody2D" parent="Walls"]
+position = Vector2(540, 550)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LowerColumn"]
+shape = SubResource("RectangleShape2D_column")
+
+[node name="ReactorBlock" type="StaticBody2D" parent="Walls"]
+position = Vector2(920, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/ReactorBlock"]
+shape = SubResource("RectangleShape2D_reactor")
+
+[node name="UpperColumnVisual" type="ColorRect" parent="."]
+offset_left = 520.0
+offset_top = 30.0
+offset_right = 560.0
+offset_bottom = 310.0
+color = Color(0.18, 0.22, 0.28, 1)
+
+[node name="LowerColumnVisual" type="ColorRect" parent="."]
+offset_left = 520.0
+offset_top = 410.0
+offset_right = 560.0
+offset_bottom = 690.0
+color = Color(0.18, 0.22, 0.28, 1)
+
+[node name="ReactorVisual" type="ColorRect" parent="."]
+offset_left = 810.0
+offset_top = 250.0
+offset_right = 1030.0
+offset_bottom = 470.0
+color = Color(0.17, 0.2, 0.26, 1)
+
+[node name="GeneratorLight" type="ColorRect" parent="."]
+offset_left = 868.0
+offset_top = 308.0
+offset_right = 972.0
+offset_bottom = 412.0
+color = Color(0.95, 0.8, 0.25, 0.35)
+
+[node name="StartZoneVisual" type="ColorRect" parent="."]
+offset_left = 78.0
+offset_top = 282.0
+offset_right = 168.0
+offset_bottom = 438.0
+color = Color(0.22, 0.42, 0.88, 0.35)
+
+[node name="ExitVisual" type="ColorRect" parent="."]
+offset_left = 82.0
+offset_top = 92.0
+offset_right = 172.0
+offset_bottom = 228.0
+color = Color(0.65, 0.2, 0.2, 1)
+
+[node name="PathHint1" type="ColorRect" parent="."]
+offset_left = 178.0
+offset_top = 150.0
+offset_right = 500.0
+offset_bottom = 170.0
+color = Color(0.2, 0.5, 0.78, 0.18)
+
+[node name="PathHint2" type="ColorRect" parent="."]
+offset_left = 578.0
+offset_top = 150.0
+offset_right = 810.0
+offset_bottom = 170.0
+color = Color(0.2, 0.5, 0.78, 0.18)
+
+[node name="PathHint3" type="ColorRect" parent="."]
+offset_left = 1030.0
+offset_top = 150.0
+offset_right = 1120.0
+offset_bottom = 170.0
+color = Color(0.2, 0.5, 0.78, 0.18)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(120, 360)
+
+[node name="Battery1" parent="." instance=ExtResource("3_battery")]
+position = Vector2(300, 140)
+
+[node name="Battery2" parent="." instance=ExtResource("3_battery")]
+position = Vector2(430, 500)
+
+[node name="Battery3" parent="." instance=ExtResource("3_battery")]
+position = Vector2(720, 150)
+
+[node name="Battery4" parent="." instance=ExtResource("3_battery")]
+position = Vector2(1110, 150)
+
+[node name="Battery5" parent="." instance=ExtResource("3_battery")]
+position = Vector2(1090, 560)
+
+[node name="Enemy1" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(330, 360)
+
+[node name="Enemy2" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(690, 360)
+move_distance = 110.0
+move_time = 1.1
+
+[node name="Enemy3" parent="." instance=ExtResource("4_enemy")]
+position = Vector2(1080, 520)
+move_distance = 100.0
+move_time = 0.9
+
+[node name="Generator" parent="." instance=ExtResource("7_generator")]
+position = Vector2(920, 360)
+
+[node name="ExitZone" parent="." instance=ExtResource("5_exit")]
+position = Vector2(127, 160)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("6_hud")]
+
+[node name="ObjectiveLabel" type="Label" parent="CanvasLayer"]
+offset_left = 855.0
+offset_top = 22.0
+offset_right = 1230.0
+offset_bottom = 66.0
+text = "OBJECTIVE: Reach the generator"
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 22
+
+[node name="ResultLabel" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 425.0
+offset_top = 260.0
+offset_right = 855.0
+offset_bottom = 390.0
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 36
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+autoplay = false
